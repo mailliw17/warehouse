@@ -41,7 +41,7 @@
 </div>
 
 <!-- Modal Operator Baru -->
-<div class="modal fade" id="operatorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="operatorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -88,38 +88,10 @@
 
         </div>
     </div>
-</div>
-
-<!-- Modal Kode Pakan Baru -->
-<div class="modal fade" id="kodePakanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Daftar Kode Pakan Baru</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="<?= base_url() ?>kodepakan/tambahkodepakan">
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Kode Pakan :</label>
-                        <input type="text" class="form-control" id="nama_pakan" name="nama_pakan" autocomplete="off" required>
-                        <?= form_error('nama_pakan', ' <small class="text-danger pl-3">', '</small>');  ?>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Tambahkan</button>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-    </div>
-</div>
+</div> -->
 
 <!-- Pelanggan Pakan Baru -->
-<div class="modal fade" id="pelangganModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="pelangganModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -127,7 +99,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
+            </div> 
             <div class="modal-body">
                 <form method="POST" action="<?= base_url() ?>pelanggan/tambahpelanggan">
                     <div class="form-group">
@@ -141,13 +113,12 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- Masukkan nomor DO checkout -->
-<div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -155,7 +126,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
+            </div> 
             <div class="modal-body">
                 <form method="POST" action="<?= base_url() ?>inputdo/checkout/">
                     <div class="form-group">
@@ -163,7 +134,7 @@
                         <input type="number" class="form-control" id="nomor_do_checkhout" name="nomor_do_checkhout" autocomplete="off" required>
                         <?= form_error('nomor_do', ' <small class="text-danger pl-3">', '</small>');  ?>
                     </div>
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Nama :</label>
                         <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan" autocomplete="off" required>
                         <?= form_error('nama_pelanggan', ' <small class="text-danger pl-3">', '</small>');  ?>
@@ -177,7 +148,7 @@
                         <label for="recipient-name" class="col-form-label">Tanggal :</label>
                         <input type="text" class="form-control" id="tanggal_keluar" name="tanggal_keluar" autocomplete="off" required>
                         <?= form_error('tanggal_keluar', ' <small class="text-danger pl-3">', '</small>');  ?>
-                    </div> -->
+                    </div>
                     <div class="modal-footer">
                         <button type="reset" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Cari</button>
@@ -186,7 +157,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 
 

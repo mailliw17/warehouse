@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Cetak Checker</title>
+    <title>Form Perincian Muat</title>
 
     <style>
         .invoice-box {
@@ -110,18 +110,17 @@
                         <tr>
                             <td class="title">
                                 <!-- <p>PT. Charoen Pokphand Indonesia</p> -->
-                                <h6>FIFO Pallet Forklift</h6>
-                                <!-- <h6><small>Feedmill Demak</small></h6> -->
+                                <h6>PERINCIAN MUAT PAKAN TERNAK</h6>
                             </td>
-
                             <td>
-                                <!-- Form FIFO <br>
-                                Warehouse Systems <br> <br> -->
-                                <b>Nomor DO :</b>
-                                <?php echo $checker2->nomor_do; ?> <br>
-                                <b>Dicetak :</b>
-                                <?php date_default_timezone_set("Asia/Jakarta");
-                                echo date("d-M-Y H:i:s");  ?>
+                                PT. Charoen Pokphand Indonesia
+                                <i>Warehouse Management Systems</i> <br>
+                                <b>No. DO :</b>
+                                <?php echo $pel1->nomor_do; ?> <br>
+                                <b>No. Truk :</b>
+                                <?php echo $pel1->plat_nomor; ?> <br>
+                                <b>Pelanggan :</b>
+                                <?php echo $pel1->nama_pelanggan; ?> <br>
                             </td>
                             <!-- rencana mau generate QRcode untuk nomor DO -->
                             <!-- <td>
@@ -164,17 +163,13 @@
                 </td>
 
                 <td>
-                    Lokasi Gudang
-                </td>
-
-                <td>
-                    Waktu Pembuatan Pakan
+                    Perincian
                 </td>
 
             </tr>
             <?php
             $no = 1;
-            foreach ($checker1 as $c) :
+            foreach ($pel2 as $p2) :
             ?>
                 <tr class="">
                     <td>
@@ -182,20 +177,11 @@
                     </td>
 
                     <td>
-                        <?php echo $c['kode_pakan']; ?>
+                        <?php echo $p2['kode_pakan']; ?>
                     </td>
 
                     <td>
-                        <?php echo $c['qty_checker']; ?>
-                    </td>
-
-                    <td>
-                        <?php echo $c['lokasi_gudang']; ?>
-                    </td>
-
-                    <td>
-                        <!-- <?php echo $c['waktu_pembuatan']; ?> -->
-                        <?php echo date("d/M/Y", strtotime($c['waktu_pembuatan'])); ?>
+                        <?php echo $p2['qty']; ?>
                     </td>
 
                 </tr>
@@ -215,7 +201,13 @@
                 <!-- <td></td> -->
                 <!-- <br> -->
                 <td>
-                    Dicetak oleh : <?= $this->session->userdata('nama'); ?>
+                    Dicetak oleh : <?= $this->session->userdata('nama'); ?> <br>
+
+                    <strong><?php date_default_timezone_set("Asia/Jakarta");
+                            echo date("d-M-Y H:i:s");  ?></strong>
+                </td>
+                <td>
+
                 </td>
             </tr>
         </table>

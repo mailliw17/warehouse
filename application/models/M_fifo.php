@@ -14,7 +14,7 @@ class M_fifo extends CI_Model
 
     public function tampilChecker()
     {
-        return $this->db->query("SELECT nomor_do, kode_pakan, lokasi_gudang, qty FROM checker")->result_array();
+        return $this->db->query("SELECT nomor_do, kode_pakan, lokasi_gudang, qty_checker FROM checker")->result_array();
     }
     public function pakanTerpilih($nomor_do)
     {
@@ -26,25 +26,45 @@ class M_fifo extends CI_Model
     //     return $this->db->query("UPDATE pallet SET qty = qty - '$qty' WHERE id_pallet='$id_pallet'");
     // }
 
-    public function sendchecker()
+    // public function sendchecker()
+    // {
+    //     $data = [
+    //         'nomor_do' => $this->input->post('nomor_do', true),
+    //         'id_pallet' => $this->input->post('id_pallet', true),
+    //         'nomor_po' => $this->input->post('nomor_po', true),
+    //         'kode_pakan' => $this->input->post('kode_pakan', true),
+    //         'lokasi_gudang' => $this->input->post('lokasi_gudang', true),
+    //         "waktu_pembuatan"  => date("Y-m-d H:i:s", strtotime($_POST['waktu_pembuatan'])),
+    //         "waktu_checker" => date("Y-m-d H:i:s", strtotime($_POST['waktu_checker'])),
+    //         'expired_date' => date("Y-m-d", strtotime($_POST['expired_date'])),
+    //         'qty' => $this->input->post('qty', true),
+    //     ];
+
+    //     $this->db->insert('checker', $data);
+    // }
+
+    public function ambilBagIni()
     {
         $data = [
             'nomor_do' => $this->input->post('nomor_do', true),
             'id_pallet' => $this->input->post('id_pallet', true),
-            'nomor_po' => $this->input->post('nomor_po', true),
             'kode_pakan' => $this->input->post('kode_pakan', true),
             'lokasi_gudang' => $this->input->post('lokasi_gudang', true),
-            "waktu_pembuatan"  => date("Y-m-d H:i:s", strtotime($_POST['waktu_pembuatan'])),
-            "waktu_checker" => date("Y-m-d H:i:s", strtotime($_POST['waktu_checker'])),
-            'expired_date' => date("Y-m-d", strtotime($_POST['expired_date'])),
-            'qty' => $this->input->post('qty', true),
+            "waktu_checker" => $this->input->post('waktu_checker', true),
+            "waktu_pembuatan" => $this->input->post('waktu_pembuatan', true),
+            'expired_date' => $this->input->post('expired_date', true),
+            'qty_checker' => $this->input->post('qty_checker', true),
         ];
 
-        $this->db->insert('checker', $data);
-    }
+        $cek = $this->db->query("SELECT * FROM checker where id_pallet='" . $this->input->post('id_pallet') . "' AND nomor_do='" . $this->input->post('nomor_do') . "'");
+        if ($cek->num_rows() >= 1) {
+            $this->session->set_flashdata('gagal', '<div class="alert alert-success" role="alert">
+            </div>');
+            redirect('fifo/checker/');
+        } else {
+            $this->db->insert('checker', $data);
+        }
 
-    public function ambilBagIni($data)
-    {
-        $this->db->insert('checker', $data);
+        // $this->db->insert('checker', $data);
     }
 }

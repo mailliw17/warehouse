@@ -59,22 +59,14 @@ class fifo extends CI_Controller
 
     public function ambilBagIni()
     {
-        $data = [
-            'nomor_do' => $this->input->post('nomor_do', true),
-            'id_pallet' => $this->input->post('id_pallet', true),
-            'kode_pakan' => $this->input->post('kode_pakan', true),
-            'lokasi_gudang' => $this->input->post('lokasi_gudang', true),
-            "waktu_checker" => $this->input->post('lokasi_gudang', true),
-            'expired_date' => $this->input->post('expired_date', true),
-            'qty' => $this->input->post('qty', true),
-            'qty_muat' => $this->input->post('qty_muat', true),
-        ];
+        // cara mencegah (nomor DO dan id_pallet) yang sama jadi double
 
-        $this->M_fifo->ambilBagIni($data);
+
+        $this->M_fifo->ambilBagIni();
 
         $this->session->set_flashdata('berhasil', '<div class="alert alert-success" role="alert">
                 </div>');
-        // redirect('fifo/checker/');
+        redirect('fifo/checker/');
     }
 
     // untuk mengirim data json ke halaman fifo

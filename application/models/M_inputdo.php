@@ -19,6 +19,6 @@ class M_inputdo extends CI_Model
 
     public function updateQtyMuat($id_pallet, $qty_muat, $nomor_do)
     {
-        $this->db->query("UPDATE checker SET qty_muat = qty_muat + $qty_muat WHERE id_pallet = $id_pallet && nomor_do = $nomor_do");
+        $this->db->query("UPDATE checker SET qty_muat = qty_muat + $qty_muat WHERE id_pallet = '$id_pallet' && nomor_do = '$nomor_do'");
     }
 }

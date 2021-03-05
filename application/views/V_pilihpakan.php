@@ -12,6 +12,15 @@
         </div>
     <?php endif; ?>
 
+    <?php if ($this->session->flashdata('gagal')) : ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Pallet dan kode pakan ini sudah dipilih sebelumnya ! Silahkan pilih pallet lain
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
+
     <div class="row">
         <div class="col-lg-6">
             <!-- Collapsable Card Example -->
@@ -47,7 +56,7 @@
                     if ($data_checker != false) :
                         foreach ($data_checker as $dc) : ?>
                             <div class="alert alert-primary" role="alert">
-                                Kode Pakan : <?php echo $dc['kode_pakan']; ?> || Qty : <?php echo $dc['qty']; ?> || Lokasi : <?php echo $dc['lokasi_gudang']; ?>
+                                Kode Pakan : <?php echo $dc['kode_pakan']; ?> || Qty : <?php echo $dc['qty_checker']; ?> || Lokasi : <?php echo $dc['lokasi_gudang']; ?>
                             </div>
                         <?php endforeach;
                     else :
@@ -140,19 +149,20 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="POST" action="<?= base_url() ?>fifo/ambilBagIni">
+            <form method="POST" action="">
                 <div class="modal-body table-responsive">
                     <table class="table table-bordered no-margin">
                         <tbody>
-                            <input type="text" id="nomor_do" value="<?= $nomor_do ?>"></input>
-                            <input type="text" id="id_pallet"></input>
-                            <input type="text" id="lokasi_gudang"></input>
-                            <input type="text" id="expired_date"></input>
-                            <input type="text" id="waktu_checker" value="<?php date_default_timezone_set("Asia/Jakarta");
-                                                                            echo date("Y-m-d H:i:s");  ?>"></input>
+                            <input type="hidden" id="nomor_do" name="nomor_do" value="<?= $nomor_do ?>"></input>
+                            <input type="hidden" id="id_pallet" name="id_pallet"></input>
+                            <input type="hidden" id="lokasi_gudang" name="lokasi_gudang"></input>
+                            <input type="hidden" id="waktu_pembuatan" name="waktu_pembuatan"></input>
+                            <input type="hidden" id="expired_date" name="expired_date"></input>
+                            <input type="hidden" id="waktu_checker" name="waktu_checker" value="<?php date_default_timezone_set("Asia/Jakarta");
+                                                                                                echo date("Y-m-d H:i:s");  ?>"></input>
                             <tr>
                                 <th>Kode Pakan :</th>
-                                <td> <input type="text" id="kode_pakan" readonly></input> </td>
+                                <td> <input type="text" id="kode_pakan" name="kode_pakan" readonly></input> </td>
                             </tr>
                             <tr>
                                 <th>Stock :</th>
@@ -160,18 +170,19 @@
                             </tr>
                             <tr>
                                 <th>Ambil :</th>
-                                <td> <input type="number" id="qty_muat" required> </td>
+                                <td> <input type="number" id="qty_checker" name="qty_checker" oninput="disabledButton()" required> </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-info">Ambil</button>
+                    <button type="submit" class="btn btn-info" id="tombol-ambil" onclick="updateStokGudang()" disabled>Ambil</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 <script src="<?= base_url() ?>vendor/jquery/jquery.min.js"></script>
 
 <script>
@@ -181,20 +192,71 @@
             var qty = $(this).data('qty');
             var id_pallet = $(this).data('id_pallet');
             var lokasi_gudang = $(this).data('lokasi_gudang');
+            var waktu_pembuatan = $(this).data('waktu_pembuatan');
             var expired_date = $(this).data('expired_date');
             $('#kode_pakan').val(kode_pakan);
             $('#qty').val(qty);
             $('#id_pallet').val(id_pallet);
             $('#lokasi_gudang').val(lokasi_gudang);
+            $('#waktu_pembuatan').val(waktu_pembuatan);
             $('#expired_date').val(expired_date);
             // var batas = qty
-            document.getElementById("qty_muat").max = qty;
-            document.getElementById("qty_muat").min = 1;
+
+            document.getElementById("qty_checker").max = qty;
+            document.getElementById("qty_checker").min = 1;
+
+            // if ((document.getElementById("qty_checker").max = qty) && (document.getElementById("qty_checker").min = 1)) {
+            //     document.getElementById("tombol-ambil").disabled = false;
+            // }
         })
     })
-</script>
 
-<script>
+    function updateStokGudang() {
+        var nomor_do = $("[name='nomor_do']").val();
+        var id_pallet = $("[name='id_pallet']").val();
+        var kode_pakan = $("[name='kode_pakan']").val();
+        var lokasi_gudang = $("[name='lokasi_gudang']").val();
+        var waktu_pembuatan = $("[name='waktu_pembuatan']").val();
+        var expired_date = $("[name='expired_date']").val();
+        var waktu_checker = $("[name='waktu_checker']").val();
+        var qty_checker = $("[name='qty_checker']").val();
+
+        $.ajax({
+            type: 'POST',
+            data: 'nomor_do=' + nomor_do + '&id_pallet=' + id_pallet + '&kode_pakan=' + kode_pakan + '&lokasi_gudang=' + lokasi_gudang + '&waktu_pembuatan=' + waktu_pembuatan + '&expired_date=' + expired_date + '&waktu_checker=' + waktu_checker + '&qty_checker=' + qty_checker,
+            url: '<?= base_url() ?>index.php/fifo/ambilBagIni',
+            dataType: 'JSON',
+            success: function() {
+                $("#modalAmbilBagIni").modal('hide');
+            }
+        });
+    }
+
+    function disabled_tombol(ceklis) {
+        if (ceklis.checked) {
+            document.getElementById('submit_button').disabled = false;
+        } else {
+            document.getElementById('submit_button').disabled = true;
+        }
+    }
+
+    function disabledButton() {
+        const qty_checker = parseInt(document.getElementById("qty_checker").value);
+        const qty = parseInt(document.getElementById("qty").value);
+        // console.log(qty_checker);
+
+        if (qty_checker > qty) {
+            document.getElementById("tombol-ambil").disabled = true;
+        } else if (qty_checker < 0) {
+            document.getElementById("tombol-ambil").disabled = true;
+        } else if (qty_checker == '') {
+            document.getElementById("tombol-ambil").disabled = true;
+        } else {
+            document.getElementById("tombol-ambil").disabled = false;
+        }
+    }
+
+
     // panggil fungsi otomatis saat page ini diload
 
     // function convertDateTimeDBtoIndo(string) {
@@ -236,62 +298,29 @@
     //     });
     // }
 
-    // function updateStokGudang() {
-    //     var nomor_do = $("[name='nomor_do']").val();
-    //     var nomor_po = $("[name='nomor_po']").val();
-    //     var id_pallet = $("[name='id_pallet']").val();
-    //     var kode_pakan = $("[name='kode_pakan']").val();
-    //     var lokasi_gudang = $("[name='lokasi_gudang']").val();
-    //     var waktu_pembuatan = $("[name='waktu_pembuatan']").val();
-    //     var expired_date = $("[name='expired_date']").val();
-    //     var waktu_checker = $("[name='waktu_checker']").val();
-    //     var qty = $("[name='qty']").val();
+    // var pakan_terpilih = document.getElementById('pakan_terpilih')
+    // $(document).ready(function() {
+    //     setInterval(function() {
+    //         $.ajax({
+    //             url: "<?php echo base_url(); ?>index.php/fifo/pakan_terpilih",
+    //             method: "POST",
+    //             data: {
+    //                 nomor_do: <?= $nomor_do; ?>
+    //             },
+    //             dataType: 'json',
+    //             success: function(data) {
+    //                 //console.log(data);
+    //                 pakan_terpilih.innerHTML = "";
+    //                 if (data == false) {
+    //                     pakan_terpilih.innerHTML += "<div class='alert alert-danger' role='alert'>Belum ada pakan yang terpilih</div>";
+    //                 } else {
+    //                     $.each(data, function(key, val) {
+    //                         pakan_terpilih.innerHTML += "<div class='alert alert-primary' role='alert'>Kode Pakan : " + val.kode_pakan + " || Qty : " + val.qty + " || Lokasi : " + val.lokasi_gudang + "</div>";
+    //                     });
+    //                 }
+    //             }
+    //         });
 
-    //     $.ajax({
-    //         type: 'POST',
-    //         data: 'nomor_do=' + nomor_do + '&nomor_po=' + nomor_po + '&id_pallet=' + id_pallet + '&kode_pakan=' + kode_pakan + '&lokasi_gudang=' + lokasi_gudang + '&waktu_pembuatan=' + waktu_pembuatan + '&expired_date=' + expired_date + '&waktu_checker=' + waktu_checker + '&qty=' + qty,
-    //         url: '<?= base_url() ?>index.php/fifo/checker_ok',
-    //         dataType: 'JSON',
-    //         success: function() {
-    //             $("#qtyBagModal").modal('hide');
-    //             ambilData();
-    //         }
-    //     });
-    // }
-
-    function disabled_tombol(ceklis) {
-        if (ceklis.checked) {
-            document.getElementById('submit_button').disabled = false;
-        } else {
-            document.getElementById('submit_button').disabled = true;
-        }
-    }
+    //     }, 1000);
+    // });
 </script>
-
-<!-- <script>
-    var pakan_terpilih = document.getElementById('pakan_terpilih')
-    $(document).ready(function() {
-        setInterval(function() {
-            $.ajax({
-                url: "<?php echo base_url(); ?>index.php/fifo/pakan_terpilih",
-                method: "POST",
-                data: {
-                    nomor_do: <?= $nomor_do; ?>
-                },
-                dataType: 'json',
-                success: function(data) {
-                    //console.log(data);
-                    pakan_terpilih.innerHTML = "";
-                    if (data == false) {
-                        pakan_terpilih.innerHTML += "<div class='alert alert-danger' role='alert'>Belum ada pakan yang terpilih</div>";
-                    } else {
-                        $.each(data, function(key, val) {
-                            pakan_terpilih.innerHTML += "<div class='alert alert-primary' role='alert'>Kode Pakan : " + val.kode_pakan + " || Qty : " + val.qty + " || Lokasi : " + val.lokasi_gudang + "</div>";
-                        });
-                    }
-                }
-            });
-
-        }, 1000);
-    });
-</script> -->

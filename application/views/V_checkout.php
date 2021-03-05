@@ -41,19 +41,29 @@
         </div>
 
 
-        <form action="">
-            <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">Scan Kode QR</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="id_pallet_scan" name="id_pallet_scan" autocomplete="off" oninput="cek_length()" autofocus>
-                </div>
-                <div class="col-sm-4">
-                    <a class="btn btn-primary" data-toggle="modal" data-target="#qtyMuatModal">
-                        Cari
-                    </a>
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-1 col-form-label">Scan <i class="fas fa-qrcode"></i> : </label>
+
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="id_pallet_scan" name="id_pallet_scan" autocomplete="off" oninput="cek_length(this.value)" placeholder="Scan disini..." autofocus>
+            </div>
+            <!-- <div class="col-sm-4">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#qtyMuatModal">
+                    Cari
+                </a>
+            </div> -->
+        </div>
+
+        <!-- <div class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
                 </div>
             </div>
-        </form>
+        </div> -->
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
@@ -83,10 +93,16 @@
                                     <td> <?php echo $no; ?> </td>
                                     <td> <?php echo $db['kode_pakan']; ?> </td>
                                     <td> <?php echo $db['lokasi_gudang']; ?> </td>
-                                    <td> <?php echo $db['qty']; ?> </td>
+                                    <td> <?php echo $db['qty_checker']; ?> </td>
                                     <td>
-                                        <?php echo $db['qty_muat']; ?>
-                                        <!-- <span class="badge badge-danger">Belum Muat</span> -->
+                                        <?php if ($db['qty_muat'] == 0) {
+                                            echo '<span class="badge badge-danger">Belum Muat</span>';
+                                        } elseif ($db['qty_muat'] == $db['qty_checker']) {
+                                            echo '<span class="badge badge-success">Selesai Muat</span>';
+                                        } elseif ($db['qty_muat'] < $db['qty_checker']) {
+                                            echo '<span class="badge badge-warning">Belum Muat ' . ($db['qty_checker'] - $db['qty_muat']) . ' Bag </span>';
+                                        }   ?>
+
                                     </td>
                                 </tr>
                             <?php $no++;
@@ -137,18 +153,29 @@ foreach ($data_do as $db) :
                         <div class="form-group">
                             <h5>Jenis Pakan : <?= $db['kode_pakan'] ?></h5>
 
-                            <h5> <strong>Qty : <?= $db['qty'] ?> <span class="qty"></span></strong> </h5>
+                            <label for="recipient-name" class="col-form-label">Qty : </label>
+
+                            <input type="number" class="form-control" id="qty_saatini_<?= $db['id_pallet'] ?>" value="<?php
+                                                                                                                        $a = $db['qty_checker'];
+                                                                                                                        $b = $db['qty_muat'];
+                                                                                                                        $hasil = $a - $b;
+                                                                                                                        echo $hasil; ?>" readonly>
+                            <br>
+
                             <label for="recipient-name" class="col-form-label">Qty Muat : </label>
-                            <input type="hidden" class="form-control" id="id_pallet" name="id_pallet" value="<?= $db['id_pallet']; ?>">
-                            <input type="hidden" class="form-control" id="nomor_do" name="nomor_do" value="<?= $db['nomor_do']; ?>">
+                            <input type="hidden" class="form-control" id="id_pallet_<?= $db['id_pallet']; ?>" name="id_pallet" value="<?= $db['id_pallet']; ?>">
+                            <input type="hidden" class="form-control" id="nomor_do_<?= $db['id_pallet']; ?>" name="nomor_do" value="<?= $db['nomor_do']; ?>">
 
-                            <input type="number" class="form-control" id="qty_muat" name="qty_muat" autocomplete="off" required autofocus>
-
+                            <input type="number" class="form-control qty_muat_modal" id="qty_muat_<?= $db['id_pallet'] ?>" name="qty_muat" autocomplete="off" oninput="cekQtyDisabledButton('qty_muat_<?= $db['id_pallet'] ?>', 'button_lastcheck_<?= $db['id_pallet'] ?>', 'qty_saatini_<?= $db['id_pallet'] ?>')" required autofocus>
                         </div>
+                        <!-- <div class="form-check">
+                            <input type="checkbox" class="form-check-input" onclick="disabled_tombol(this)">
+                            <label class="form-check-label" for="exampleCheck1"> <strong> Juru Muat memastikan jika Qty yang dimuat sudah sesuai</strong></label>
+                        </div> -->
                         <div class="modal-footer">
                             <button type="reset" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                             <!-- fungsi ambilBag belum dibuat -->
-                            <button type="submit" class="btn btn-primary">Tambahkan</button>
+                            <button type="submit" class="btn btn-primary" id="button_lastcheck_<?= $db['id_pallet'] ?>" disabled>Tambahkan</button>
                         </div>
                     </form>
                 </div>
@@ -196,15 +223,54 @@ endforeach; ?>
 </div>
 
 <script>
-    function cek_length() {
+    function cek_length(id_quantity) {
+        var id = "qty_saatini_" + id_quantity;
         var kode_qr = document.getElementById("id_pallet_scan").value;
+        // pembatasanya untuk value max juga tidak bisa didapat JS
+        var qty = document.getElementById(id).value;
+
+        // document.getElementsByClassName("qty_muat_modal").max = qty;
+        // document.getElementsByClassName("qty_muat_modal").min = 1;
 
         if (kode_qr.length == 10) {
-            console.log(kode_qr);
+            // console.log(kode_qr);
             var id_modal = "#qtyMuatModal_" + String(kode_qr);
-            console.log(id_modal);
+            // console.log(id_modal);
+            // console.log(qty);
             $(id_modal).modal();
-            //document.getElementById(id_modal).style.display = "block";
+            document.getElementById("id_pallet_scan").value = '';
+        }
+    }
+
+    // function disabled_tombol(ceklis) {
+    //     if (ceklis.checked) {
+    //         document.getElementsByClassName('submit_button').disabled = false;
+    //     } else {
+    //         document.getElementsByClassName('submit_button').disabled = true;
+    //     }
+    // }
+
+    function cekQtyDisabledButton(qty_input, id_button, qty_saatini) {
+        const qty_inputan = parseInt(document.getElementById(qty_input).value);
+        const qty = parseInt(document.getElementById(qty_saatini).value);
+        // console.log(qty_inputan);
+
+        // if (qty_inputan == 0) {
+        //     document.getElementById(id_button).disabled = true;
+        // } else {
+        //     document.getElementById(id_button).disabled = false;
+        // }
+
+        if (qty_inputan > qty) {
+            document.getElementById(id_button).disabled = true;
+        } else if (qty_inputan < 0) {
+            document.getElementById(id_button).disabled = true;
+        } else if (qty_inputan == '') {
+            document.getElementById(id_button).disabled = true;
+        } else if (qty == 0) {
+            document.getElementById(id_button).disabled = true;
+        } else {
+            document.getElementById(id_button).disabled = false;
         }
     }
 </script>

@@ -9,11 +9,11 @@
     <?= $this->session->flashdata('message') ?>
 
 
-    <!-- Content Row --> 
+    <!-- Content Row -->
     <!-- <div class="row"> -->
 
     <div class="">
-        <form method="POST" action="<?= base_url() ?>C_auth/gantipassword">
+        <form method="POST" action="<?= base_url() ?>auth/gantipassword">
             <div class="form-group col-md-6">
                 <label for="message-text" class="col-form-label">Password Lama :</label>
                 <input type="password" class="form-control" id="passwordLama" name="passwordLama" required></input>

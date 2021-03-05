@@ -54,9 +54,9 @@
                 <input type="password" class="form-control" id="password2" name="password2" required></input>
             </div> -->
             <div class="form-group col-md-8 float-right">
-                <a type="button" class="btn btn-secondary" href="<?= base_url() ?>auth/kelolaakun">Batal</a>
-                &nbsp; &nbsp; &nbsp;
-                <button type="submit" class="btn btn-primary">Ganti Password</button>
+                <a type="button" class="btn btn-sm btn-secondary" href="<?= base_url() ?>auth/kelolaakun">Batal</a>
+                &nbsp; &nbsp;
+                <button type="submit" class="btn btn-sm btn-primary">Ganti Password</button>
             </div>
         </form>
     </div>

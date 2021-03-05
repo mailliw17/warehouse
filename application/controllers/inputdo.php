@@ -91,6 +91,7 @@ class inputdo extends CI_Controller
         redirect("inputdo/lastcheck/" . $nomor_do);
     }
 
+    // ini fungsi tujuan akhir sesudah input nama pelanggan dan juga plat nomor
     public function historyDo()
     {
         $nomor_do = $this->input->post('nomor_do');
@@ -99,19 +100,21 @@ class inputdo extends CI_Controller
         $data_do = $this->M_inputdo->getPalletFromDO($nomor_do)->result_array();
 
         foreach ($data_do as $db) {
-            $this->M_historydo->insertHistory($nama_pelanggan, $plat_nomor, $db['nomor_do'], $db['id_pallet'], $db['kode_pakan'], $db['lokasi_gudang'], $db['waktu_pembuatan'], $db['expired_date'], $db['waktu_checker'], $db['qty'], $db['qty_muat']);
+            $this->M_historydo->insertHistory($nama_pelanggan, $plat_nomor, $db['nomor_do'], $db['id_pallet'], $db['kode_pakan'], $db['lokasi_gudang'], $db['waktu_pembuatan'], $db['expired_date'], $db['waktu_checker'], $db['qty_checker'], $db['qty_muat']);
 
             $data_pallet = $this->M_historydo->getDataPallet($db['id_pallet'])->row_array();
             if ($data_pallet['qty'] == 0) {
-                //update pallet bro
+                //update pallet bro 
                 $this->M_historydo->updatePallet($db['id_pallet']);
             }
-            if ($db['qty'] == $db['qty_muat']) {
-                $this->M_historydo->deleteChecker($db['id_pallet'], $db['nomor_do']);
-            }
+            // gapapa walau beda qty_muat dan checker tetap bersihkan saja. Sisanya langsung masuk ke fitur ecer
+            // if ($db['qty_checker'] == $db['qty_muat']) {
+            //     $this->M_historydo->deleteChecker($db['id_pallet'], $db['nomor_do']);
+            // }
+            $this->M_historydo->deleteChecker($db['id_pallet'], $db['nomor_do']);
         }
         $this->session->set_flashdata('berhasil-do', 'berhasil-do');
-        redirect("dashboard");
+        redirect("historymuat");
     }
 
     // public function pakanterpilih_checkout()

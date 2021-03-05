@@ -84,3 +84,31 @@
 <!-- /.container-fluid -->
 </div>
 <!-- End of Main Content -->
+
+<!-- Modal Kode Pakan Baru -->
+<div class="modal fade" id="kodePakanModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Daftar Kode Pakan Baru</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="<?= base_url() ?>kodepakan/tambahkodepakan">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Kode Pakan :</label>
+                        <input type="text" class="form-control" id="nama_pakan" name="nama_pakan" autocomplete="off" required>
+                        <?= form_error('nama_pakan', ' <small class="text-danger pl-3">', '</small>');  ?>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Tambahkan</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

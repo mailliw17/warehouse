@@ -40,7 +40,7 @@
                     <div class="card-body">
                         Kode Pakan : <?php echo $c['kode_pakan']; ?>
                         <br>
-                        Qty : <?php echo $c['qty']; ?> Bag
+                        Qty : <?php echo $c['qty_checker']; ?> Bag
                         <br>
                         Lokasi Gudang : <?php echo $c['lokasi_gudang']; ?>
                     </div>

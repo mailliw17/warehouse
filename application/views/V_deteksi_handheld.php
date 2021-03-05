@@ -19,7 +19,7 @@
         <form method="POST" action="<?= base_url() ?>kodeqr/hasil_scandeteksi_handheld">
             <div class="form-group col-md-6">
                 <label for="recipient-name" class="col-form-label">ID Pallet :</label>
-                <input type="number" class="form-control" id="id_pallet" name="id_pallet" autocomplete="off" required autofocus>
+                <input type="text" class="form-control" id="id_pallet" name="id_pallet" autocomplete="off" required autofocus>
             </div>
             <!-- <button type="submit">oke</button> -->
         </form>

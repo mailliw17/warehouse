@@ -117,6 +117,24 @@
                 </a>
             </li>
 
+            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Juru Muat')) : ?>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="<?= base_url() ?>palletrobek">
+                        <i class="fas fa-house-damage"></i>
+                        <span>Pallet Robek / Ecer</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="<?= base_url() ?>historymuat">
+                        <i class="fas fa-history"></i>
+                        <span>History Muat & Cetak Bukti</span>
+                    </a>
+                </li>
+
+            <?php endif; ?>
+
             <li class="nav-item">
                 <a class="nav-link collapsed" href="<?= base_url() ?>kodeqr/scandeteksi">
                     <i class="fas fa-search"></i>
@@ -136,17 +154,10 @@
 
 
 
-            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Juru Muat')) : ?>
 
-                <div class="sidebar-heading">Tambahan</div>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url() ?>pelanggan">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Daftar Pelanggan</span></a>
-                </li>
-                <hr class="sidebar-divider" />
-            <?php endif; ?>
+
+
 
             <?php if ($this->session->userdata('role') == 'Admin') : ?>
                 <!-- Nav Item - Charts -->

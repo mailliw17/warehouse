@@ -17,9 +17,9 @@
         </div>
     <?php endif; ?>
 
-    <?php if ($this->session->flashdata('berhasil-do')) : ?>
+    <?php if ($this->session->flashdata('berhasil-tambah')) : ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            Input DO ke dalam sistem berhasil !
+            Bag Ecer berhasil ditambahkan ke pallet !
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
