@@ -31,7 +31,7 @@ class kodeqr extends CI_Controller
 
         $data = [
             'id_pallet' => random_string('alnum', 10),
-            'tanggal_pallet' => date("Y-m-d h:i:sa"),
+            'tanggal_pallet' => date("Y-m-d H:i:sa"),
         ];
 
         //insert ke database

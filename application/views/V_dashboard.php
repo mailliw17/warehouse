@@ -17,9 +17,9 @@
         </div>
     <?php endif; ?>
 
-    <?php if ($this->session->flashdata('berhasil-tambah')) : ?>
+    <?php if ($this->session->flashdata('selesaitimpa')) : ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
-            Bag Ecer berhasil ditambahkan ke pallet !
+            Bag ecer berhasil ditambahkan ke pallet !
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -97,43 +97,6 @@
         </div>
 
     </div>
-
-
-    <!-- DataTales Example -->
-    <!-- <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">
-                Stock Pakan (SOON PAKE CHART)
-            </h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Kode Pakan</th>
-                            <th>Qty</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $no = 1;
-                        foreach ($jumlah_pakan as $jp) : ?>
-                            <tr>
-                                <td> <?php echo $no; ?> </td>
-                                <td> <?php echo $jp['kode_pakan']; ?> </td>
-                                <td><?php echo $jp['jumlah']; ?> Bag</td>
-                            </tr>
-                        <?php
-                            $no++;
-                        endforeach; ?> 
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div> -->
-
 
     <hr>
 

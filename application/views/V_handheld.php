@@ -21,6 +21,7 @@
                 <label for="recipient-name" class="col-form-label">ID Pallet :</label>
                 <input type="text" class="form-control" id="id_pallet" name="id_pallet" autocomplete="off" required autofocus>
             </div>
+            <button type="submit" class="btn btn-success">OK</button>
         </form>
     </div>
 </div>

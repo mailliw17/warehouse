@@ -39,12 +39,17 @@ class auth extends CI_Controller
                 $this->session->set_userdata('role', $role);
                 $this->session->set_userdata('login', TRUE);
                 // if ($role == 'Admin') {
-                redirect('dashboard');
+                // redirect('dashboard');
                 // } elseif ($role == 'Operator Input') {
                 //     redirect('C_qrcode');
                 // } elseif ($role == 'Operator Output') {
                 //     redirect('C_fifo');
                 // }
+                if ($role !== 'Lampu') {
+                    redirect('dashboard');
+                } elseif ($role == 'Lampu') {
+                    redirect('lampu');
+                }
             } else {
                 $this->session->set_flashdata('gagal_login', 'Username / Password salah !');
                 redirect('auth');

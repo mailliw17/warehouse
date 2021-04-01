@@ -51,6 +51,7 @@ class M_inputpo extends CI_Model
             "waktu_pembuatan"  => date("Y-m-d", strtotime($_POST['waktu_pembuatan'])),
             'nomor_pallet' => $this->input->post('nomor_pallet', true),
             'expired_date' => date("Y-m-d", strtotime($_POST['expired_date'])),
+            'operator' => $this->input->post('operator', true),
         ];
 
         $this->db->where('id_pallet', $this->input->post('id_pallet'));

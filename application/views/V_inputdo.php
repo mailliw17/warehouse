@@ -60,7 +60,7 @@
     <script>
         Swal.fire(
             'Error',
-            'Nomor DO tidak ditemukan. Silahkan cetak form FIFO',
+            'Nomor DO tidak ditemukan. Silahkan cetak form FIFO terlebih dahulu',
             'warning'
         )
     </script>

@@ -61,21 +61,21 @@ class inputpo extends CI_Controller
         $data['data_pallet'] = $this->M_inputpo->getPallet($data['id_pallet']);
 
         if ($data['data_pallet'] == 0) {
+            // saat pallet tidak ada di DB, pake sweetalert
             $this->session->set_flashdata('gagal_barcode', 'gagal');
-            redirect('inputpo/scan');
+            redirect('inputpo/handheld');
         } else if ($data['data_pallet']['nomor_po'] != 0) {
             $this->session->set_flashdata('sudah_isi', 'isi');
         } else {
             $this->session->set_flashdata('berhasil', 'Berhasil');
         }
-
         $data['no_po'] = $this->M_inputpo->getNoPO();
 
         $data['kode_pakan'] = $this->M_inputpo->getKodePakanManual();
 
         $judul['page_title'] = 'Isikan PO';
         $this->load->view('templates/header', $judul);
-        $this->load->view('V_inputpo.php', $data);
+        $this->load->view('V_inputpo', $data);
         $this->load->view('templates/footer');
     }
 
@@ -84,7 +84,7 @@ class inputpo extends CI_Controller
         $this->M_inputpo->sendpo();
         $this->session->set_flashdata('berhasil', '<div class="alert alert-success" role="alert">
                 </div>');
-        redirect('dashboard');
+        redirect('lampu');
     }
 
     public function getNoPO()

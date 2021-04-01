@@ -21,4 +21,9 @@ class M_inputdo extends CI_Model
     {
         $this->db->query("UPDATE checker SET qty_muat = qty_muat + $qty_muat WHERE id_pallet = '$id_pallet' && nomor_do = '$nomor_do'");
     }
+
+    public function checkKodeQr($kode_qr)
+    {
+        return $this->db->query("SELECT * FROM checker WHERE id_pallet = '$kode_qr'");
+    }
 }

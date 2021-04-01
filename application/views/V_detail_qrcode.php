@@ -114,6 +114,10 @@
                                     }
                                     ?></td>
                             </tr>
+                            <tr>
+                                <th scope="row">Operator Muat :</th>
+                                <td><?php echo $detail['operator']; ?></td>
+                            </tr>
                         </tbody>
                     </table>
                     <a href="<?= base_url() ?>kodeqr/scandeteksi_handheld" class="btn btn-primary">Kembali</a>

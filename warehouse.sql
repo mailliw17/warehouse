@@ -31,6 +31,19 @@ END;;
 
 DELIMITER ;
 
+DROP TABLE IF EXISTS `gudang_rpk`;
+CREATE TABLE `gudang_rpk` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pallet` varchar(256) NOT NULL,
+  `kode_pakan` varchar(256) NOT NULL,
+  `waktu_pembuatan` date NOT NULL,
+  `expired_date` date NOT NULL,
+  `qty` int(11) NOT NULL,
+  `qty_rpk` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 DROP TABLE IF EXISTS `history_do`;
 CREATE TABLE `history_do` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -45,9 +58,13 @@ CREATE TABLE `history_do` (
   `qty_muat` int(3) NOT NULL,
   `nama_pelanggan` varchar(50) NOT NULL,
   `plat_nomor` varchar(50) NOT NULL,
+  `operator` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+INSERT INTO `history_do` (`id`, `nomor_do`, `id_pallet`, `kode_pakan`, `lokasi_gudang`, `waktu_pembuatan`, `expired_date`, `waktu_checker`, `qty`, `qty_muat`, `nama_pelanggan`, `plat_nomor`, `operator`) VALUES
+(1,	5,	'bA0KHaEU3Z',	'B11MTK',	'line 6a',	'2021-03-31',	'2021-04-21',	'2021-03-31 14:12:47',	1,	1,	'Astuti',	'B 4324 HG',	'William'),
+(2,	5,	'pSartnPVZ4',	'B11MTK',	'line 11',	'2021-03-29',	'2021-04-21',	'2021-03-31 14:13:22',	6,	4,	'Astuti',	'B 4324 HG',	'William');
 
 DROP TABLE IF EXISTS `kode_pakan`;
 CREATE TABLE `kode_pakan` (
@@ -75,16 +92,18 @@ CREATE TABLE `pallet` (
   `lokasi_gudang` varchar(256) DEFAULT NULL,
   `expired_date` date DEFAULT NULL,
   `qty` int(3) DEFAULT NULL,
+  `operator` varchar(256) DEFAULT NULL,
   `print` int(1) DEFAULT NULL,
   PRIMARY KEY (`id_pallet`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `pallet` (`id_pallet`, `tanggal_pallet`, `nomor_po`, `kode_pakan`, `line_packing`, `shift`, `waktu_pembuatan`, `nomor_pallet`, `lokasi_gudang`, `expired_date`, `qty`, `print`) VALUES
-('9YLFZekTr7',	'2021-02-18 10:23:38',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1),
-('cTpsAlGIoC',	'2021-02-18 10:20:41',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1),
-('JC4euUOKm5',	'2021-02-18 10:20:43',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1),
-('JyVh6F0j3x',	'2021-02-18 10:20:45',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1),
-('wrSzp7XhV9',	'2021-03-03 08:45:30',	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL);
+INSERT INTO `pallet` (`id_pallet`, `tanggal_pallet`, `nomor_po`, `kode_pakan`, `line_packing`, `shift`, `waktu_pembuatan`, `nomor_pallet`, `lokasi_gudang`, `expired_date`, `qty`, `operator`, `print`) VALUES
+('7XyTMrcwCE',	'2021-03-31 15:00:23',	123456,	'B11MTK',	2,	2,	'2021-03-31',	3,	'line 5b',	'2021-04-21',	56,	'William',	NULL),
+('bA0KHaEU3Z',	'2021-03-31 02:53:35',	123456,	'B11MTK',	2,	1,	'2021-03-30',	2,	'line 6a',	'2021-04-21',	11,	'William',	NULL),
+('Diwjm8rU5y',	'2021-03-31 02:53:33',	55,	'B10',	3,	1,	'2021-03-31',	1,	'line 5c',	'2021-04-21',	56,	'William',	NULL),
+('dPY8pbk26J',	'2021-04-01 14:03:47',	9,	'B11MTK',	2,	1,	'2021-03-28',	1,	'line 99',	'2021-04-22',	56,	'William',	NULL),
+('of4QaSsY5J',	'2021-03-31 02:53:37',	123456,	'B11MTK',	2,	1,	'2021-04-01',	1,	'line 5c',	'2021-04-21',	50,	'William',	NULL),
+('pSartnPVZ4',	'2021-03-31 02:53:34',	654321,	'B11MTK',	2,	1,	'2021-03-29',	1,	'line 11',	'2021-04-21',	50,	'William',	NULL);
 
 DROP TABLE IF EXISTS `pelanggan`;
 CREATE TABLE `pelanggan` (
@@ -93,9 +112,6 @@ CREATE TABLE `pelanggan` (
   PRIMARY KEY (`id_pelanggan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `pelanggan` (`id_pelanggan`, `nama_pelanggan`) VALUES
-(1,	'Pakan ayam sejati'),
-(3,	'kucing1');
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -110,7 +126,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id_user`, `nama`, `username`, `role`, `password`) VALUES
 (14,	'William',	'wil',	'Admin',	'202cb962ac59075b964b07152d234b70'),
-(22,	'Packing Robotik',	'packing',	'Operator Packing',	'202cb962ac59075b964b07152d234b70'),
-(23,	'Juru Muat',	'jurumuat',	'Juru Muat',	'202cb962ac59075b964b07152d234b70');
+(22,	'Packing Robotik',	'asep_op',	'Operator Packing',	'202cb962ac59075b964b07152d234b70'),
+(23,	'Bambang',	'bambang_jm',	'Juru Muat',	'202cb962ac59075b964b07152d234b70');
 
--- 2021-03-05 07:46:19
+-- 2021-04-01 07:16:39

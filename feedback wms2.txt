@@ -1,0 +1,21 @@
+Request :
+
+Done :
+- improvement action ketika gagal scan handheld
+- Default value ambil pallet FIFO modal itu mengikuti Qty awal
+- improvement ketika Qty_checker = 0 langsung di delete dari table checker
+- Live stock gudang itu akan berkurang dari Qty !
+- Improvement untuk pemindahan lokasi / update Qty, bug kalau NULL tidak bisa perbarui -> DONE
+- Tambah informasi nama juru muat saat muat ke truk (sudah dinamis database)
+- Tambah informasi pallet untuk operator packing (tambah tabel di pallet)
+- Buat menu baru untuk Stock Repacking
+- Improvement kalau pallet sudah di scan, dan ditimpa scan, ganti pake sweealert
+- Fitur gudang repacking dan 4 test case (berhasil, pallet ga terdaftar, pallet kosong, pallet beda kodepakan)
+- Cetak perincian muat udh ada nama operator dan dinamis
+- Salah scan ambil di V_checkout kasih alert
+- Improvement untuk countdown lampu hijau
+- Improvement FIFO salah dan kalau +2 hari kasih alert 
+- penyesuaian menu untuk semua role
+
+Bug :
+

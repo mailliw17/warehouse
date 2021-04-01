@@ -9,7 +9,7 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Aksi untuk Tambah, Hapus, dan Edit Pallet</h1>
+        <h1 class="h3 mb-0 text-gray-800">Silahkan tekan tombol dibawah dan masukan nomor DO</h1>
         <!-- <button href="<?= base_url() ?>C_qrcode/tambahqrcode" data-toggle="modal" data-target="#QRModal" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-print fa-sm text-white-50"></i> Buat QR CODE BARU</button> -->
     </div>
 

@@ -35,6 +35,7 @@
                             <th>Nomor PO</th>
                             <th>Isi pakan</th>
                             <th>Nomor Pallet</th>
+                            <th>Qty</th>
                             <th>Print</th>
                             <th>Aksi</th>
                         </tr>
@@ -61,6 +62,11 @@
                                             echo 'Kosong';
                                         } else {
                                             echo $p['nomor_pallet'];
+                                        }  ?></td>
+                                <td> <?php if (is_null($p['qty'])) {
+                                            echo 'Kosong';
+                                        } else {
+                                            echo $p['qty'];
                                         }  ?></td>
                                 <td> <?php if (is_null($p['print'])) {
                                             echo '

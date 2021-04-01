@@ -1,0 +1,23 @@
+SOLVED : 
+- expired date ada yang 7, 14, 21 hari -> KM.09 hanya 21 hari -> SOLVED
+- improvement kamera deteksi pallet -> SOLVED
+- improvement cetak qrpallet tinggal klik saja -> SOLVED 
+- bug di checker -> SOLVED
+- improvement status muat DO -> SOLVED
+- bug saat update Qty_muat -> SOLVED
+- improvement saat sudah scan dan modal turun, langsung bersihkan inputan pake JS -> SOLVED
+- improvement nomor PO dan id_pallet sama gabole 2x di masukin checker, nanti kebingungan pas mau muat
+- pallet yang masih ada sisa isi ketika di V_checkout isi pelanggan juga disikat habis jadi null
+- improvement untuk opsi robek, update saja ke pallet lama dgn inputan scan id_pallet dan qty
+- improvement buat form berhasil muat ambil aja dari tabel history_do
+- improvement bug lagi di scan kode qr modal karena scanner nya input masuk ke url
+- improvement logika  function disabledButton() untuk modal ambil pakan di V_pilihpakan
+- improvement kasus id non unique karena footer dan id modal foreach
+- improvement Qty_muat tombolnya disabled saat sudah 0
+- improvement Max and min input area Qty_muat
+
+BUG : 
+- 
+
+SARAN : 
+- untuk upload lokasi, jadi line pake barcode

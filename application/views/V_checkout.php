@@ -190,7 +190,7 @@ endforeach; ?>
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Masukan Jumlah Bag </h5>
+                <h5 class="modal-title" id="exampleModalLabel">Silahkan isi data berikut</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -198,11 +198,10 @@ endforeach; ?>
             <div class="modal-body">
                 <form method="POST" action="<?= base_url('inputdo/historyDo') ?>">
                     <div class="form-group">
-                        <h3>PROSES MUAT HAMPIR SELESAI !</h3>
-                        <h5>Silahkan Isi !</h5>
-
 
                         <input type="hidden" class="form-control" id="nomor_do" name="nomor_do" value="<?= $db['nomor_do']; ?>">
+
+                        <input type="hidden" class="form-control" id="operator" name="operator" value="<?= $this->session->userdata('nama'); ?>" readonly>
 
                         <label for="recipient-name" class="col-form-label">Nama Pelanggan : </label>
                         <input type="text" class="form-control" id="nama_pelanggan" name="nama_pelanggan" autocomplete="off" required autofocus>
@@ -222,24 +221,73 @@ endforeach; ?>
     </div>
 </div>
 
+<!-- Modal Pemberitahuan Salah Scan -->
+<!-- <div class="modal fade" id="salah_scan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Salah Scan Barcode Pallet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> -->
+<script src="<?= base_url() ?>vendor/jquery/jquery.min.js"></script>
+<script src="<?= base_url() ?>vendor/sweetalert.js"></script>
+
 <script>
     function cek_length(id_quantity) {
         var id = "qty_saatini_" + id_quantity;
         var kode_qr = document.getElementById("id_pallet_scan").value;
+
         // pembatasanya untuk value max juga tidak bisa didapat JS
-        var qty = document.getElementById(id).value;
+        // var qty = document.getElementById(id).value;
 
         // document.getElementsByClassName("qty_muat_modal").max = qty;
         // document.getElementsByClassName("qty_muat_modal").min = 1;
-
+        // $pemancing = false;
         if (kode_qr.length == 10) {
-            // console.log(kode_qr);
-            var id_modal = "#qtyMuatModal_" + String(kode_qr);
-            // console.log(id_modal);
-            // console.log(qty);
-            $(id_modal).modal();
-            document.getElementById("id_pallet_scan").value = '';
+            $.ajax({
+                type: 'POST',
+                data: 'kode_qr=' + kode_qr,
+                url: '<?= base_url() ?>index.php/inputdo/check_kode_qr',
+                dataType: 'JSON',
+                success: function(data) {
+                    if (data == true) {
+
+                        var id_modal = "#qtyMuatModal_" + String(kode_qr);
+                        $(id_modal).modal();
+                        // $pemancing = true
+                        document.getElementById("id_pallet_scan").value = '';
+                    } else {
+                        document.getElementById("id_pallet_scan").value = '';
+                        Swal.fire(
+                            'Gagal',
+                            'Pallet tidak sesuai!',
+                            'error'
+                        )
+                    }
+                }
+            });
         }
+        // if (kode_qr.length == 10) {
+        //     var id_modal = "#qtyMuatModal_" + String(kode_qr);
+        //     $(id_modal).modal();
+        //     // $pemancing = true
+        //     document.getElementById("id_pallet_scan").value = '';
+        // }
+        // else if (kode_qr.length == 10 & $pemancing == false) {
+        //     var modal_salah_scan = "#salah_scan"
+        //     $(modal_salah_scan).modal();
+        // }
     }
 
     // function disabled_tombol(ceklis) {

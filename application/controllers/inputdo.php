@@ -12,6 +12,7 @@ class inputdo extends CI_Controller
         }
         $this->load->model('M_inputdo');
         $this->load->model('M_historydo');
+        $this->load->model('M_gudangrpk');
     }
 
     // public function index()
@@ -82,6 +83,19 @@ class inputdo extends CI_Controller
         }
     }
 
+    public function check_kode_qr()
+    {
+        $kode_qr = $this->input->post('kode_qr');
+        $check = $this->M_inputdo->checkKodeQr($kode_qr)->num_rows();
+        if ($check != 0) {
+            // id pallet ditemukan
+            $data = true;
+        } else {
+            $data = false;
+        }
+        echo json_encode($data);
+    }
+
     public function updateQtyMuat()
     {
         $nomor_do = $this->input->post('nomor_do');
@@ -95,34 +109,29 @@ class inputdo extends CI_Controller
     public function historyDo()
     {
         $nomor_do = $this->input->post('nomor_do');
+        $operator = $this->input->post('operator');
         $nama_pelanggan = $this->input->post('nama_pelanggan');
         $plat_nomor = $this->input->post('plat_nomor');
         $data_do = $this->M_inputdo->getPalletFromDO($nomor_do)->result_array();
 
         foreach ($data_do as $db) {
-            $this->M_historydo->insertHistory($nama_pelanggan, $plat_nomor, $db['nomor_do'], $db['id_pallet'], $db['kode_pakan'], $db['lokasi_gudang'], $db['waktu_pembuatan'], $db['expired_date'], $db['waktu_checker'], $db['qty_checker'], $db['qty_muat']);
+            $this->M_historydo->insertHistory($nama_pelanggan, $plat_nomor, $db['nomor_do'], $db['id_pallet'], $db['kode_pakan'], $db['lokasi_gudang'], $db['waktu_pembuatan'], $db['expired_date'], $db['waktu_checker'], $db['qty_checker'], $db['qty_muat'], $operator);
+
+            // kalau beda antara FIFO dan muat berarti robek
+            $robek = $db['qty_checker'] - $db['qty_muat'];
+            if ($db['qty_checker'] !== $db['qty_muat']) {
+                $this->M_gudangrpk->moveToRPK($db['id_pallet'], $db['kode_pakan'], $db['waktu_pembuatan'], $db['expired_date'], $robek);
+            }
 
             $data_pallet = $this->M_historydo->getDataPallet($db['id_pallet'])->row_array();
             if ($data_pallet['qty'] == 0) {
                 //update pallet bro 
                 $this->M_historydo->updatePallet($db['id_pallet']);
             }
-            // gapapa walau beda qty_muat dan checker tetap bersihkan saja. Sisanya langsung masuk ke fitur ecer
-            // if ($db['qty_checker'] == $db['qty_muat']) {
-            //     $this->M_historydo->deleteChecker($db['id_pallet'], $db['nomor_do']);
-            // }
+
             $this->M_historydo->deleteChecker($db['id_pallet'], $db['nomor_do']);
         }
         $this->session->set_flashdata('berhasil-do', 'berhasil-do');
         redirect("historymuat");
     }
-
-    // public function pakanterpilih_checkout()
-    // {
-    //     $data['nomor_do'] = $nomor_do;
-    //     // untuk kirim data-data yang memiliki nomor DO tersebut
-    //     $nomor_do = 1312;
-    //     $data = $this->M_inputdo->getPalletFromDO($nomor_do)->result_array();
-    //     echo json_encode($data);
-    // }
 }

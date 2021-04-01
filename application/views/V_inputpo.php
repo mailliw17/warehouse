@@ -98,6 +98,10 @@
                                                                                                                 echo date('d-M-Y', strtotime(' + 21 days'));
                                                                                                                 ?>">
             </div>
+
+            <!-- operator packing -->
+            <input type="hidden" class="form-control" id="operator" name="operator" value="<?= $this->session->userdata('nama'); ?>" readonly>
+
         </div>
         <hr>
         <div class="form-group col-md-8">
@@ -157,11 +161,15 @@
     }
 </script>
 
+<script src="<?= base_url() ?>vendor/sweetalert.js"></script>
+
 <?php if ($this->session->flashdata('sudah_isi')) : ?>
     <script>
-        var ask = window.confirm('Pallet masih terisi. Batalkan input data ?');
-        if (ask) {
-            window.location.href = "<?= base_url() ?>dashboard";
-        }
+        Swal.fire({
+            icon: 'info',
+            title: 'Pallet sudah terisi',
+            text: 'Timpa dengan data baru?',
+            footer: '<strong><a href="<?= base_url() ?>inputpo/handheld">KLIK UNTUK BATAL MENGISI</a></strong>'
+        })
     </script>
 <?php endif; ?>

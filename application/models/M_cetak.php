@@ -15,7 +15,7 @@ class M_cetak extends CI_Model
 
     public function pelanggan1($nomor_do)
     {
-        return $this->db->query("SELECT nomor_do, nama_pelanggan, plat_nomor FROM history_do WHERE nomor_do = '$nomor_do'")->row();
+        return $this->db->query("SELECT nomor_do, nama_pelanggan, plat_nomor, operator FROM history_do WHERE nomor_do = '$nomor_do'")->row();
     }
 
     public function pelanggan2($nomor_do)

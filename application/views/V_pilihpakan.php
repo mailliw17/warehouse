@@ -21,6 +21,24 @@
         </div>
     <?php endif; ?>
 
+    <?php if ($this->session->flashdata('kosongan')) : ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Silahkan isi Quantity Bag !
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($this->session->flashdata('salahfifo')) : ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            FIFO mu salah !
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
+
     <div class="row">
         <div class="col-lg-6">
             <!-- Collapsable Card Example -->
@@ -34,9 +52,10 @@
                     <div class="card-body">
                         <ol>
                             <li>Ketikkan <strong>kode pakan</strong> pada tabel pencarian </li>
-                            <li>Hasil pencarian teratas adalah pallet tertua</li>
-                            <li>Klik tombol <strong>PILIH</strong> </li>
+                            <li>Hasil pencarian teratas adalah pallet tertua berdasarkan tanggal dan nomor pallet</li>
+                            <li>Klik tombol <strong>AMBIL</strong> </li>
                             <li>Masukkan jumlah bag yang akan diambil</li>
+                            <li style="color: red;">*Satu Nomor DO tidak dapat mengambil pallet yang sama</li>
                             <li>Jika sudah selesai, centang form FIFO dan cetak FIFO</li>
                         </ol>
                     </div>
@@ -101,6 +120,7 @@
                             <th>Qty</th>
                             <th>Lokasi</th>
                             <th>Tanggal Pembuatan</th>
+                            <th>Nomor Pallet</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -115,9 +135,10 @@
                                 <td> <?php echo $p['qty'] ?> </td>
                                 <td> <?php echo $p['lokasi_gudang'] ?> </td>
                                 <td> <?php echo  date("d-M-Y", strtotime($p['waktu_pembuatan'])) ?> </td>
+                                <td> <?php echo $p['nomor_pallet']; ?> </td>
 
                                 <td>
-                                    <a id="ambilBagIni" href="" class="btn btn-info btn-icon-split btn-sm" data-toggle="modal" data-target="#modalAmbilBagIni" data-kode_pakan="<?= $p['kode_pakan'] ?>" data-id_pallet="<?= $p['id_pallet'] ?>" data-lokasi_gudang="<?= $p['lokasi_gudang'] ?>" data-expired_date="<?= $p['expired_date'] ?>" data-waktu_pembuatan="<?= $p['waktu_pembuatan'] ?>" data-qty="<?= $p['qty'] ?>">
+                                    <a id="ambilBagIni" href="#" class="btn btn-info btn-icon-split btn-sm" data-kode_pakan="<?= $p['kode_pakan'] ?>" data-id_pallet="<?= $p['id_pallet'] ?>" data-lokasi_gudang="<?= $p['lokasi_gudang'] ?>" data-expired_date="<?= $p['expired_date'] ?>" data-waktu_pembuatan="<?= $p['waktu_pembuatan'] ?>" data-qty="<?= $p['qty'] ?>">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-dolly"></i>
                                         </span>
@@ -162,21 +183,21 @@
                                                                                                 echo date("Y-m-d H:i:s");  ?>"></input>
                             <tr>
                                 <th>Kode Pakan :</th>
-                                <td> <input type="text" id="kode_pakan" name="kode_pakan" readonly></input> </td>
+                                <td> <input class="form-control" type="text" id="kode_pakan" name="kode_pakan" readonly></input> </td>
                             </tr>
                             <tr>
                                 <th>Stock :</th>
-                                <td> <input type="number" id="qty" readonly></input> </td>
+                                <td> <input class="form-control" type="number" id="qty" readonly></input> </td>
                             </tr>
                             <tr>
                                 <th>Ambil :</th>
-                                <td> <input type="number" id="qty_checker" name="qty_checker" oninput="disabledButton()" required> </td>
+                                <td> <input type="number" id="qty_checker" name="qty_checker" value=56 oninput="disabledButton()"> Bag</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-info" id="tombol-ambil" onclick="updateStokGudang()" disabled>Ambil</button>
+                    <button type="submit" class="btn btn-info" id="tombol-ambil" onclick="updateStokGudang()">Ambil</button>
                 </div>
             </form>
         </div>
@@ -184,10 +205,12 @@
 </div>
 
 <script src="<?= base_url() ?>vendor/jquery/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
 <script>
     $(document).ready(function() {
         $(document).on('click', '#ambilBagIni', function() {
+            //function fungsi_ambil_bag() {
             var kode_pakan = $(this).data('kode_pakan');
             var qty = $(this).data('qty');
             var id_pallet = $(this).data('id_pallet');
@@ -204,10 +227,40 @@
 
             document.getElementById("qty_checker").max = qty;
             document.getElementById("qty_checker").min = 1;
-
-            // if ((document.getElementById("qty_checker").max = qty) && (document.getElementById("qty_checker").min = 1)) {
-            //     document.getElementById("tombol-ambil").disabled = false;
-            // }
+            document.getElementById("qty_checker").value = qty;
+            $.ajax({
+                type: 'POST',
+                data: 'id_pallet=' + id_pallet + '&kode_pakan=' + kode_pakan,
+                url: '<?= base_url() ?>index.php/fifo/checkPallet',
+                dataType: 'JSON',
+                success: function(data) {
+                    if (data == 2) {
+                        Swal.fire({
+                            title: 'Apakah anda yakin?',
+                            text: "FIFO yang diambil tidak sesuai, tapi masih toleransi waktu 2 hari",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya',
+                            cancelButtonText: 'Batal',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                $("#modalAmbilBagIni").modal('show');
+                            }
+                        })
+                    } else if (data == 1) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal',
+                            text: 'Pallet tidak sesuai FIFO !',
+                        })
+                    } else if (data == 3) {
+                        $("#modalAmbilBagIni").modal('show');
+                    }
+                }
+            });
+            //}
         })
     })
 
@@ -296,7 +349,7 @@
     //             document.getElementById("qty").min = 1;
     //         }
     //     });
-    // }
+    // } 
 
     // var pakan_terpilih = document.getElementById('pakan_terpilih')
     // $(document).ready(function() {

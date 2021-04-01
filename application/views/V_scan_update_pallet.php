@@ -2,22 +2,24 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Scan Barcode menggunakan Hand Held</h1>
+        <h1 class="h3 mb-0 text-gray-800">Scan Barcode Untuk perbaruan Lokasi/Qty Pallet </h1>
     </div>
-
-    <?php if ($this->session->flashdata('gagal')) : ?>
-        <!-- <h3 class="panel-title">Arahkan Kode QR Ke Kamera!</h3> -->
-        <audio controls autoplay hidden>
-            <source src="<?= base_url() ?>assets/gagal.mp3" type="audio/mpeg">
-        </audio>
-    <?php endif; ?>
 
     <!-- Content Row -->
     <!-- <div class="row"> -->
 
+    <?php if ($this->session->flashdata('berhasil')) : ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Pallet berhasil diperbarui !
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
+
     <div class="">
-        <form method="POST" action="<?= base_url() ?>kodeqr/hasil_scandeteksi_handheld">
-            <div class="form-group col-md-6">
+        <form method="POST" action="<?= base_url() ?>fifo/form_updatepallet">
+            <div class="form-group col-md-4">
                 <label for="recipient-name" class="col-form-label">ID Pallet :</label>
                 <input type="text" class="form-control" id="id_pallet" name="id_pallet" autocomplete="off" required autofocus>
             </div>
@@ -38,6 +40,16 @@
         Swal.fire(
             'Gagal',
             'Barcode Tidak Terdaftar!',
+            'error'
+        )
+    </script>
+<?php endif; ?>
+
+<?php if ($this->session->flashdata('pallet_kosong')) : ?>
+    <script>
+        Swal.fire(
+            'Gagal',
+            'Pallet masih kosong, tidak bisa diperbarui !',
             'error'
         )
     </script>

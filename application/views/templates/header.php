@@ -65,16 +65,16 @@
 
                 <div class="sidebar-heading">QR Pallet</div>
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="<?= base_url() ?>inputpo/scan">
                         <i class="fas fa-folder-plus"></i>
                         <span>Input Nomor PO <small>(Kamera)</small></span></a>
-                </li>
+                </li> -->
 
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url() ?>inputpo/handheld">
                         <i class="fas fa-folder-plus"></i>
-                        <span>Input Nomor PO <small>(Hand Held)</small></span></a>
+                        <span>Input Nomor PO </span></a>
                 </li>
 
                 <li class="nav-item">
@@ -101,6 +101,8 @@
                         <span>Barang Muat Truk (DO)</span></a>
                 </li>
 
+
+
                 <hr class="sidebar-divider" />
             <?php endif; ?>
 
@@ -117,12 +119,18 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url() ?>fifo/scan_updatepallet">
+                    <i class="fas fa-exchange-alt"></i>
+                    <span>Update Lokasi / Qty</span></a>
+            </li>
+
             <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Juru Muat')) : ?>
 
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="<?= base_url() ?>palletrobek">
+                    <a class="nav-link collapsed" href="<?= base_url() ?>gudangrpk">
                         <i class="fas fa-house-damage"></i>
-                        <span>Pallet Robek / Ecer</span>
+                        <span>Gudang Repacking</span>
                     </a>
                 </li>
 
@@ -135,17 +143,17 @@
 
             <?php endif; ?>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="<?= base_url() ?>kodeqr/scandeteksi">
                     <i class="fas fa-search"></i>
                     <span>Deteksi Pallet (Kamera)</span>
                 </a>
-            </li>
+            </li> -->
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="<?= base_url() ?>kodeqr/scandeteksi_handheld">
                     <i class="fas fa-search"></i>
-                    <span>Deteksi Pallet (Hand Held)</span>
+                    <span>Deteksi Pallet</span>
                 </a>
             </li>
 
@@ -173,6 +181,13 @@
                         <span>Pengaturan Akun Operator</span>
                     </a>
                 </li>
+
+                <!-- <li class="nav-item">
+                    <a class="nav-link collapsed" href="<?= base_url() ?>lampu">
+                        <i class="fas fa-user-cog"></i>
+                        <span>Lampu</span>
+                    </a>
+                </li> -->
 
                 <hr class="sidebar-divider" />
             <?php endif; ?>
