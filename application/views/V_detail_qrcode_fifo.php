@@ -59,10 +59,10 @@
                     <p class="card-text">Kode Pakan : <?php echo $detail['kode_pakan']; ?> </p>
                     <p class="card-text">Nomor Pallet : <?php echo $detail['nomor_pallet']; ?></p>
                     <p class="card-text">Lokasi Gudang : <?php echo $detail['lokasi_gudang']; ?></p>
-                    <p class="card-text">Line Packing : <?php echo $detail['line_packing']; ?></p>
+                    <p class="card-text">Line Robot : <?php echo $detail['line_packing']; ?></p>
                     <p class="card-text">Waktu : <?php echo $detail['waktu']; ?></p>
                     <p class="card-text">Shift : <?php echo $detail['shift']; ?></p>
-                    <p class="card-text">Expired Date : <?php echo $detail['expired_date']; ?></p>
+                    <p class="card-text">Tanggal Kadaluarsa : <?php echo $detail['expired_date']; ?></p>
                     <a href="<?= base_url() ?>C_fifo" class="btn btn-primary">Kembali</a>
                 </div>
             </div>

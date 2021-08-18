@@ -54,7 +54,16 @@ class M_inputpo extends CI_Model
             'operator' => $this->input->post('operator', true),
         ];
 
+        $lok = $this->input->post('lokasi_gudang', true);
+
+        $this->db->query("UPDATE peta_lokasi_gudang SET kapasitas_pallet = kapasitas_pallet - 1 WHERE line_gudang = '$lok'");
+
         $this->db->where('id_pallet', $this->input->post('id_pallet'));
         $this->db->update('pallet', $data);
+    }
+
+    public function getLokasiGudang()
+    {
+        return $this->db->query("SELECT * FROM peta_lokasi_gudang WHERE kapasitas_pallet != 0")->result();
     }
 }

@@ -73,6 +73,8 @@ class inputpo extends CI_Controller
 
         $data['kode_pakan'] = $this->M_inputpo->getKodePakanManual();
 
+        $data['lokasi_gudang'] = $this->M_inputpo->getLokasiGudang();
+
         $judul['page_title'] = 'Isikan PO';
         $this->load->view('templates/header', $judul);
         $this->load->view('V_inputpo', $data);

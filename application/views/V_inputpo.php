@@ -50,7 +50,7 @@
                 <input type="number" class="form-control" id="qty" name="qty" placeholder="Ketikan Jumlah Bag.." autocomplete="off" onkeyup="stoppedTyping()" value=56 required>
             </div>
             <div class="form-group col-md-3">
-                <label for="linepacking">Line Packing</label>
+                <label for="linepacking">Line Robot</label>
                 <select id="line_packing" name="line_packing" class="form-control" required>
                     <option selected disabled>--SILAHKAN PILIH--</option>
                     <option value="1">1</option>
@@ -59,10 +59,23 @@
                     <option value="4">4</option>
                 </select>
             </div>
-            <div class="form-group col-md-3">
+
+            <!-- <div class="form-group col-md-3">
                 <label for="lokasigudang">Lokasi Gudang</label>
                 <input type="text" class="form-control" id="lokasi_gudang" name="lokasi_gudang" placeholder="Ketik lokasi gudang..." required autocomplete="off" onkeyup="stoppedTyping()">
+            </div> -->
+
+            <div class="form-group col-md-3">
+                <label for="lokasigudang">Lokasi Gudang</label>
+                <input list="lok_gudang" name="lokasi_gudang" id="lokasi_gudang" class="form-control" autocomplete="off" placeholder="Masukan lokasi gudang" required oninput="stoppedTyping()" />
+                <datalist id="lok_gudang">
+                    <?php
+                    foreach ($lokasi_gudang as $lg) : ?>
+                        <option value="<?= $lg->line_gudang ?>"> <?php echo $lg->line_gudang; ?> - Sisa <?php echo $lg->kapasitas_pallet; ?> Pallet </option>
+                    <?php endforeach; ?>
+                </datalist>
             </div>
+
         </div>
         <!-- BARIS 3 -->
         <div class="form-row">
@@ -71,7 +84,7 @@
                 <input type="number" class="form-control" id="nomor_pallet" name="nomor_pallet" readonly>
             </div>
             <div class="form-group col-md-2">
-                <label for="waktu">Waktu Pembuatan</label>
+                <label for="waktu">Tanggal Produksi</label>
                 <input type="datetime" class="form-control" id="waktu_pembuatan" name="waktu_pembuatan" value="<?php date_default_timezone_set("Asia/Jakarta");
                                                                                                                 echo date("d-M-Y");  ?>" readonly>
             </div>
@@ -92,7 +105,7 @@
 
 
             <div class="form-group col-md-2">
-                <label for="expireddate">Expired Date (21 hari)</label>
+                <label for="expireddate">Tanggal Kadaluarsa (21 hari)</label>
                 <input type="text" class="form-control" id="expired_date" name="expired_date" readonly value="<?php
                                                                                                                 date_default_timezone_set("Asia/Jakarta");
                                                                                                                 echo date('d-M-Y', strtotime(' + 21 days'));

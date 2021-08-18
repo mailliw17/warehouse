@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Stock Gudang Repack</h1>
+        <h1 class="h3 mb-0 text-gray-800">Stock Gudang REPK</h1>
     </div>
 
     <?php if ($this->session->flashdata('berhasil-repack')) : ?>
@@ -56,8 +56,8 @@
                             <th>Nomor</th>
                             <!-- <th>ID Pallet</th> -->
                             <th>Kode pakan</th>
-                            <th>Waktu pembuatan</th>
-                            <th>Expired Date</th>
+                            <th>Tanggal Produksi</th>
+                            <th>Tanggal Kadaluarsa</th>
                             <th>Qty Robek</th>
                             <th>Status</th>
                             <th>Aksi</th>
@@ -150,7 +150,7 @@
                 <form method="POST" action="<?= base_url('gudangrpk/selesairepack') ?>">
                     <div class="form-group">
 
-                        <input type="text" class="form-control" id="id_pallet" name="id_pallet" autocomplete="off" readonly>
+                        <input type="hidden" class="form-control" id="id_pallet" name="id_pallet" autocomplete="off" readonly>
 
                         <label for="recipient-name" class="col-form-label">Qty Robek : </label>
                         <input type="number" class="form-control" id="qty" name="qty" autocomplete="off" readonly>

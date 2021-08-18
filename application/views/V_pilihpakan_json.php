@@ -91,7 +91,7 @@
                             <th>Kode Pakan</th>
                             <th>Qty</th>
                             <th>Lokasi</th>
-                            <th>Tanggal Pembuatan</th>
+                            <th>Tanggal Produksi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>

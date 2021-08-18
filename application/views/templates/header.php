@@ -59,6 +59,21 @@
                     <span>Dashboard</span></a>
             </li>
 
+            <?php if (($this->session->userdata('role') == 'Lab')) : ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url() ?>lab">
+                        <i class="fas fa-flask"></i>
+                        <span> Analisis Lab</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url() ?>inputpo/handheld">
+                        <i class="fab fa-creative-commons-remix"></i>
+                        <span> Repacking Feed</span></a>
+                </li>
+
+            <?php endif; ?>
+
             <hr class="sidebar-divider" />
 
             <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Operator Packing')) : ?>
@@ -107,30 +122,39 @@
             <?php endif; ?>
 
 
+            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Juru Muat')) : ?>
+                <!-- Heading -->
+                <div class="sidebar-heading">Tambahan</div>
 
-            <!-- Heading -->
-            <div class="sidebar-heading">Tambahan</div>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="<?= base_url() ?>kodepakan">
+                        <i class="fas fa-list-ol"></i>
+                        <span>Kode Pakan</span>
+                    </a>
+                </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="<?= base_url() ?>kodepakan">
-                    <i class="fas fa-list-ol"></i>
-                    <span>Kode Pakan</span>
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="<?= base_url() ?>petalokasigudang">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Peta Lokasi Gudang</span>
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="<?= base_url() ?>fifo/scan_updatepallet">
-                    <i class="fas fa-exchange-alt"></i>
-                    <span>Update Lokasi / Qty</span></a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url() ?>fifo/scan_updatepallet">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Pindah Lokasi Pallet</span></a>
+                </li>
+
+            <?php endif; ?>
 
             <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Juru Muat')) : ?>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="<?= base_url() ?>gudangrpk">
                         <i class="fas fa-house-damage"></i>
-                        <span>Gudang Repacking</span>
+                        <span>Gudang REPK</span>
                     </a>
                 </li>
 

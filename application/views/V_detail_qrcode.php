@@ -85,11 +85,11 @@
                                 <td><?php echo $detail['lokasi_gudang']; ?></td>
                             </tr>
                             <tr>
-                                <th scope="row">Line Packing :</th>
+                                <th scope="row">Line Robot :</th>
                                 <td><?php echo $detail['line_packing']; ?></td>
                             </tr>
                             <tr>
-                                <th scope="row">Waktu Pembuatan :</th>
+                                <th scope="row">Tanggal Produksi:</th>
                                 <td><?php
                                     if ($detail['waktu_pembuatan'] === NULL) {
                                         echo '';
@@ -105,7 +105,7 @@
                                 <td><?php echo $detail['shift']; ?></td>
                             </tr>
                             <tr>
-                                <th scope="row">Expired Date :</th>
+                                <th scope="row">Tanggal Kadaluarsa :</th>
                                 <td><?php
                                     if ($detail['expired_date'] === NULL) {
                                         echo '';
@@ -115,7 +115,7 @@
                                     ?></td>
                             </tr>
                             <tr>
-                                <th scope="row">Operator Muat :</th>
+                                <th scope="row">Operator Packing :</th>
                                 <td><?php echo $detail['operator']; ?></td>
                             </tr>
                         </tbody>

@@ -4,7 +4,12 @@ class M_fifo extends CI_Model
 {
     public function tampilsemuapakan()
     {
-        return $this->db->query("SELECT * FROM pallet WHERE kode_pakan IS NOT NULL AND qty != 0 AND (SELECT min(waktu_pembuatan) FROM pallet)order by waktu_pembuatan, nomor_pallet asc")->result_array();
+        return $this->db->query("SELECT * FROM pallet WHERE kode_pakan IS NOT NULL 
+        AND qty != 0 
+        AND (SELECT min(waktu_pembuatan) FROM pallet)
+        -- CEK STATUS DARI LAB 
+        AND (status_lab IS NULL OR status_lab = 'REMIXED') 
+        ORDER BY waktu_pembuatan, nomor_pallet asc")->result_array();
     }
 
     public function ambilIDPallet($tabel, $where)

@@ -168,7 +168,7 @@
                 </td>
 
                 <td>
-                    Waktu Pembuatan Pakan
+                    Tanggal Produksi
                 </td>
 
             </tr>

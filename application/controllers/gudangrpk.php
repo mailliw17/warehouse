@@ -17,7 +17,7 @@ class gudangrpk extends CI_Controller
     public function index()
     {
         $data['pallet'] = $this->M_gudangrpk->tampilrobek();
-        $judul['page_title'] = 'Gudang Repack';
+        $judul['page_title'] = 'Gudang REPK';
         $this->load->view('templates/header', $judul);
         $this->load->view('V_gudangrpk', $data);
         $this->load->view('templates/footer');

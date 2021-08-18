@@ -17,7 +17,7 @@ class M_auth extends CI_Model
     public function kelolaakun()
     {
         $this->db->where('role', 'Operator Packing');
-        $this->db->or_where('role', 'Juru Muat');
+        $this->db->or_where('role', 'Krani Muat');
         return $this->db->get('user');
     }
 

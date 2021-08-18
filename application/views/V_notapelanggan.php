@@ -201,7 +201,7 @@
                 <!-- <td></td> -->
                 <!-- <br> -->
                 <td>
-                    Juru Muat : <?php echo $pel1->operator; ?> <br>
+                    Krani Muat : <?php echo $pel1->operator; ?> <br>
 
                     <strong><?php date_default_timezone_set("Asia/Jakarta");
                             echo date("d-M-Y H:i:s");  ?></strong>

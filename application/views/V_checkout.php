@@ -168,10 +168,7 @@ foreach ($data_do as $db) :
 
                             <input type="number" class="form-control qty_muat_modal" id="qty_muat_<?= $db['id_pallet'] ?>" name="qty_muat" autocomplete="off" oninput="cekQtyDisabledButton('qty_muat_<?= $db['id_pallet'] ?>', 'button_lastcheck_<?= $db['id_pallet'] ?>', 'qty_saatini_<?= $db['id_pallet'] ?>')" required autofocus>
                         </div>
-                        <!-- <div class="form-check">
-                            <input type="checkbox" class="form-check-input" onclick="disabled_tombol(this)">
-                            <label class="form-check-label" for="exampleCheck1"> <strong> Juru Muat memastikan jika Qty yang dimuat sudah sesuai</strong></label>
-                        </div> -->
+
                         <div class="modal-footer">
                             <button type="reset" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                             <!-- fungsi ambilBag belum dibuat -->

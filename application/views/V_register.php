@@ -43,7 +43,7 @@
                     <option value="" selected disabled>--SILAHKAN PILIH--</option>
                     <option value="Admin">Admin</option>
                     <option value="Operator Packing">Operator Packing</option>
-                    <option value="Juru Muat">Juru Muat</option>
+                    <option value="Krani Muat">Krani Muat</option>
                 </select>
             </div>
             <div class="form-group col-md-6">
