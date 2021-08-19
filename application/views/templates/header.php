@@ -66,12 +66,6 @@
                         <span> Analisis Lab</span></a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url() ?>inputpo/handheld">
-                        <i class="fab fa-creative-commons-remix"></i>
-                        <span> Repacking Feed</span></a>
-                </li>
-
             <?php endif; ?>
 
             <hr class="sidebar-divider" />
