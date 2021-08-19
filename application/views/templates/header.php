@@ -59,7 +59,7 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <?php if (($this->session->userdata('role') == 'Lab')) : ?>
+            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Lab')) : ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url() ?>lab">
                         <i class="fas fa-flask"></i>
@@ -101,7 +101,7 @@
                 <hr class="sidebar-divider" />
             <?php endif; ?>
 
-            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Juru Muat')) : ?>
+            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Krani Muat')) : ?>
                 <div class="sidebar-heading">FIFO Pallet</div>
 
                 <li class="nav-item">
@@ -122,7 +122,7 @@
             <?php endif; ?>
 
 
-            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Juru Muat')) : ?>
+            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Krani Muat')) : ?>
                 <!-- Heading -->
                 <div class="sidebar-heading">Tambahan</div>
 
@@ -149,7 +149,7 @@
 
             <?php endif; ?>
 
-            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Juru Muat')) : ?>
+            <?php if (($this->session->userdata('role') == 'Admin') || ($this->session->userdata('role') == 'Krani Muat')) : ?>
 
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="<?= base_url() ?>gudangrpk">
